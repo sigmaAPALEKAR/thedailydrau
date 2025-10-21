@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit a Story</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Submit a Story</h1>
+    <a href="index.html" class="submit-button">Back to Daily Drau</a>
+    <hr>
+  </header>
+
+  <form id="storyForm">
+    <input type="text" id="title" placeholder="Story title" required><br>
+    <textarea id="content" placeholder="Write your story..." required></textarea><br>
+    <input type="text" id="author" placeholder="Your name (optional)"><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    const firebaseConfig = { /* your firebase config from Firebase */ };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.getElementById("storyForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = document.getElementById("title").value;
+      const content = document.getElementById("content").value;
+      const author = document.getElementById("author").value;
+
+      await addDoc(collection(db, "stories"), {
+        title, content, author,
+        timestamp: serverTimestamp()
+      });
+
+      alert("Story submitted!");
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
