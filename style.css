@@ -1,0 +1,99 @@
+body {
+  background: #fdfcf7;
+  color: #111;
+  font-family: "Times New Roman", Georgia, serif;
+  max-width: 900px;
+  margin: auto;
+  padding: 30px;
+  line-height: 1.6;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+header h1 {
+  font-family: "Old English Text MT", "Times New Roman", serif;
+  font-size: 3rem;
+  text-align: center;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.date {
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.submit-button {
+  display: block;
+  text-align: center;
+  margin: 10px auto;
+  padding: 8px 15px;
+  background: #222;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+hr {
+  border: none;
+  border-top: 2px solid black;
+  margin: 20px 0;
+}
+
+.newspaper {
+  column-count: 2;
+  column-gap: 40px;
+}
+
+article {
+  break-inside: avoid-column;
+  margin-bottom: 20px;
+  border-bottom: 1px dashed #555;
+  padding-bottom: 10px;
+}
+
+article h2 {
+  font-family: "Georgia", serif;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+article .meta {
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #aaa;
+  padding-bottom: 4px;
+}
+
+article .content {
+  text-align: justify;
+  font-size: 1rem;
+}
+
+#top h3 {
+  font-size: 2rem;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+#top p {
+  font-size: 1.1rem;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+  opacity: 0.15;
+  z-index: -1;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.8rem;
+  margin-top: 40px;
+}
