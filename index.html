@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Daily Drau</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>The Daily Drau</h1>
+    <p class="date" id="date"></p>
+    <a href="submit.html" class="submit-button">Submit a Story</a>
+    <hr>
+  </header>
+
+  <section id="top-story">
+    <h2>Top Story</h2>
+    <div id="top"></div>
+    <hr>
+  </section>
+
+  <main id="stories" class="newspaper"></main>
+
+  <footer>
+    <hr>
+    <p>© The Daily Drau — All stories belong to their authors.</p>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    const firebaseConfig = { /* your firebase config from Firebase */ };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // show today's date
+    document.getElementById("date").textContent =
+      new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    async function loadStories() {
+      const q = query(collection(db, "stories"), orderBy("timestamp", "desc"));
+      const snapshot = await getDocs(q);
+
+      const storiesDiv = document.getElementById("stories");
+      const topDiv = document.getElementById("top");
+      storiesDiv.innerHTML = "";
+
+      let firstStory = true;
+
+      snapshot.forEach(doc => {
+        const s = doc.data();
+        const date = s.timestamp ? s.timestamp.toDate().toLocaleString() : "—";
+        const articleHTML = `
+          <article>
+            <h2>${s.title}</h2>
+            <p class="meta">By ${s.author || "Anonymous"} | ${date}</p>
+            <p class="content">${s.content}</p>
+          </article>
+        `;
+
+        if (firstStory) {
+          topDiv.innerHTML = `<h3>${s.title}</h3><p>${s.content}</p><small>by ${s.author || "Anonymous"}</small>`;
+          firstStory = false;
+        } else {
+          storiesDiv.innerHTML += articleHTML;
+        }
+      });
+    }
+
+    loadStories();
+  </script>
+</body>
+</html>
